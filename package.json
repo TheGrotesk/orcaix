@@ -1,6 +1,6 @@
 {
   "name": "@thegrotesk/aiac",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "AI as Code - run AI agent workflows from YAML",
   "type": "module",
   "license": "GPL-3.0",

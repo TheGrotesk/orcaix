@@ -1,0 +1,67 @@
+name: Git Commit and Push
+description: |
+  Reusable git workflow: stage → commit → push.
+  Accepts vars:
+    default_commit_message  — pre-filled commit message (user can override or leave empty to use it)
+    stage_files             — space-separated file list for the "only" staging option
+version: "1.0"
+
+stages:
+  - id: ask_stage_mode
+    type: input
+    message: |
+      How would you like to stage files?
+        all   — git add . (stage everything)
+        only  — git add {{vars.stage_files}}
+    next:
+      - condition: "output.toLowerCase().trim() === 'all'"
+        stage: stage_all
+      - stage: stage_only
+
+  - id: stage_all
+    type: shell
+    command: git add .
+
+  - id: stage_only
+    type: shell
+    command: git add {{vars.stage_files}}
+
+  - id: ask_commit_message
+    type: input
+    message: |
+      Enter a commit message, or press Enter to use the default:
+      Default: "{{vars.default_commit_message}}"
+    placeholder: "{{vars.default_commit_message}}"
+    next:
+      - condition: "output.trim() === ''"
+        stage: commit_default
+      - stage: commit_typed
+
+  - id: commit_default
+    type: shell
+    command: git commit -m "{{vars.default_commit_message}}"
+    next:
+      - stage: ask_push
+
+  - id: commit_typed
+    type: shell
+    command: git commit -m "{{stages.ask_commit_message.output}}"
+
+  - id: ask_push
+    type: input
+    message: |
+      Committed. Push to remote now?
+        yes  — git push
+        no   — stop here (you can push manually later)
+    next:
+      - condition: "['yes','y'].includes(output.toLowerCase().trim())"
+        stage: push
+      - stage: done
+
+  - id: push
+    type: shell
+    command: git push
+
+  - id: done
+    type: shell
+    command: echo "Done. Run 'git push' when ready."

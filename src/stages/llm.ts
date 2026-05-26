@@ -17,6 +17,13 @@ export async function executeLLMStage(
   let prompt = interpolate(stage.prompt, ctx, currentInput);
   const system = stage.system ? interpolate(stage.system, ctx, currentInput) : undefined;
 
+  if (!prompt.trim()) {
+    throw new Error(
+      `Stage "${stage.id}" (llm): prompt resolved to an empty string. ` +
+      'Pass --prompt, --prompt-file, or ensure a previous stage produces output.',
+    );
+  }
+
   if (stage.files && stage.files.length > 0) {
     const blocks: string[] = [];
     let totalBytes = 0;

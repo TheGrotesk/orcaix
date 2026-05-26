@@ -58,53 +58,9 @@ stages:
         console.log('README.md updated to v' + v);
       "
 
-  - id: ask_stage_mode
-    type: input
-    message: |
-      Ready to commit version {{stages.read_new_version.output}}.
-
-      How would you like to stage files?
-        all    — git add . (include any other uncommitted changes)
-        only   — stage only version-related files (package.json, docs, README)
-    next:
-      - condition: "output.toLowerCase().trim() === 'all'"
-        stage: stage_all
-      - stage: stage_only
-
-  - id: stage_all
-    type: shell
-    command: git add .
-
-  - id: stage_only
-    type: shell
-    command: git add package.json package-lock.json docs/index.html README.md
-
-  - id: ask_commit_message
-    type: input
-    message: |
-      Enter a commit message (or press Enter to use the default):
-      Default: "bump version to {{stages.read_new_version.output}}"
-    placeholder: "bump version to {{stages.read_new_version.output}}"
-
-  - id: commit
-    type: shell
-    command: git commit -m "{{stages.ask_commit_message.output}}"
-
-  - id: ask_push
-    type: input
-    message: |
-      Committed. Push to remote now?
-        yes  — git push
-        no   — stop here (you can push manually later)
-    next:
-      - condition: "['yes','y'].includes(output.toLowerCase().trim())"
-        stage: push
-      - stage: done
-
-  - id: push
-    type: shell
-    command: git push
-
-  - id: done
-    type: shell
-    command: echo "Done. Run 'git push' when ready."
+  - id: git_commit_push
+    type: workflow
+    path: ./git-commit-push.yaml
+    vars:
+      default_commit_message: "bump version to {{stages.read_new_version.output}}"
+      stage_files: "package.json package-lock.json docs/index.html README.md"

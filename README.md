@@ -4,7 +4,7 @@
 
 **AI as Code — run AI agent workflows defined in YAML**
 
-[![Version](https://img.shields.io/badge/version-0.1.3-6366f1?style=flat-square)](https://github.com/TheGrotesk/aiac/releases/tag/v0.1.3)
+[![Version](https://img.shields.io/badge/version-0.1.4-6366f1?style=flat-square)](https://github.com/TheGrotesk/aiac/releases/tag/v0.1.4)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License](https://img.shields.io/badge/license-GPL--v3-blue?style=flat-square)](LICENSE)
 [![Docs](https://img.shields.io/badge/docs-live-10b981?style=flat-square)](https://docs-smoky-theta.vercel.app)
