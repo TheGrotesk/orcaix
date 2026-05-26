@@ -86,8 +86,25 @@ stages:
       Default: "bump version to {{stages.read_new_version.output}}"
     placeholder: "bump version to {{stages.read_new_version.output}}"
 
-  - id: commit_and_push
+  - id: commit
     type: shell
-    command: >
-      git commit -m "{{stages.ask_commit_message.output}}" &&
-      git push
+    command: git commit -m "{{stages.ask_commit_message.output}}"
+
+  - id: ask_push
+    type: input
+    message: |
+      Committed. Push to remote now?
+        yes  — git push
+        no   — stop here (you can push manually later)
+    next:
+      - condition: "['yes','y'].includes(output.toLowerCase().trim())"
+        stage: push
+      - stage: done
+
+  - id: push
+    type: shell
+    command: git push
+
+  - id: done
+    type: shell
+    command: echo "Done. Run 'git push' when ready."

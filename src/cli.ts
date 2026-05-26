@@ -70,10 +70,23 @@ program
         } else if (opts.prompt) {
           prompt = opts.prompt;
         } else if (!opts.dryRun) {
-          console.error(
-            chalk.red('Error: provide --prompt <text> or --prompt-file <path>'),
-          );
-          process.exit(1);
+          // Prompt is optional when the first stage doesn't reference {{input}}
+          const workflow = loadWorkflow(workflowPath);
+          const firstStage = workflow.stages[0];
+          const firstStageUsesInput =
+            ('prompt' in firstStage && firstStage.prompt?.includes('{{input}}')) ||
+            ('command' in firstStage && firstStage.command?.includes('{{input}}')) ||
+            ('message' in firstStage && firstStage.message?.includes('{{input}}')) ||
+            ('content' in firstStage && firstStage.content?.includes('{{input}}')) ||
+            ('url' in firstStage && firstStage.url?.includes('{{input}}'));
+
+          if (firstStageUsesInput) {
+            console.error(
+              chalk.red('Error: provide --prompt <text> or --prompt-file <path>'),
+            );
+            process.exit(1);
+          }
+          prompt = '';
         } else {
           prompt = '';
         }
