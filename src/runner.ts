@@ -186,6 +186,8 @@ function printDryRun(workflow: Workflow): void {
         const subExtra = sub.type === 'llm' ? chalk.gray(` · ${sub.provider}/${sub.model}`) : '';
         console.log(chalk.gray(`    └ `) + chalk.yellow(sub.id) + ` (${subType}${subExtra})`);
       }
+    } else if (stage.type === 'workflow') {
+      console.log(chalk.gray('  path: ') + chalk.white(stage.path));
     }
     console.log();
   }
@@ -223,7 +225,13 @@ export async function runWorkflow(workflowPath: string, options: RunOptions): Pr
   checkRequiredKeys(workflow);
 
   const templates = resolveTemplates(workflowPath, workflow);
-  const ctx: ExecutionContext = createContext(options.prompt, options.vars ?? {}, templates);
+  const ctx: ExecutionContext = createContext(
+    options.prompt,
+    options.vars ?? {},
+    templates,
+    dirname(resolve(workflowPath)),
+    options.dryRun,
+  );
 
   console.log(chalk.bold.cyan(`\nRunning: ${workflow.name}`));
   if (workflow.description) {

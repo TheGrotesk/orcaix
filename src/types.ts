@@ -78,6 +78,18 @@ export const InputStageSchema = z.object({
 });
 export type InputStage = z.infer<typeof InputStageSchema>;
 
+// ── Workflow stage ────────────────────────────────────────────────────────────
+
+export const WorkflowStageSchema = z.object({
+  id: z.string(),
+  type: z.literal('workflow'),
+  path: z.string(),                          // path to sub-workflow YAML (relative to parent workflow dir)
+  prompt: z.string().optional(),             // input passed to sub-workflow; defaults to current input
+  vars: z.record(z.string()).optional(),     // extra vars merged into sub-workflow context
+  next: z.array(NextConditionSchema).optional(),
+});
+export type WorkflowStage = z.infer<typeof WorkflowStageSchema>;
+
 // ── Loop stage ───────────────────────────────────────────────────────────────
 // Recursive schema: loop.stages can contain any Stage, including nested loops.
 // TypeScript can't infer recursive types from z.infer — we define LoopStage manually
@@ -103,7 +115,8 @@ export type Stage =
   | FileStage
   | HTTPStage
   | InputStage
-  | LoopStage;
+  | LoopStage
+  | WorkflowStage;
 
 // StageSchema is assigned after LoopStageSchema — use a let so z.lazy can close over it.
 // The explicit annotation prevents the "implicitly any" circular inference error.
@@ -128,6 +141,7 @@ StageSchema = z.discriminatedUnion('type', [
   HTTPStageSchema,
   InputStageSchema,
   LoopStageSchema as unknown as z.ZodObject<{ type: z.ZodLiteral<'loop'> }>,
+  WorkflowStageSchema,
 ]) as z.ZodType<Stage>;
 
 // ── Template file (standalone .yaml with only a templates block) ─────────────

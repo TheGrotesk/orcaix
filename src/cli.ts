@@ -63,32 +63,12 @@ program
 
         const workflowPath = resolve(workflowArg);
 
-        // Resolve prompt
+        // Resolve prompt — optional; LLM stages validate non-empty input at runtime
         let prompt: string;
         if (opts.promptFile) {
           prompt = readFileSync(resolve(opts.promptFile), 'utf-8').trim();
-        } else if (opts.prompt) {
-          prompt = opts.prompt;
-        } else if (!opts.dryRun) {
-          // Prompt is optional when the first stage doesn't reference {{input}}
-          const workflow = loadWorkflow(workflowPath);
-          const firstStage = workflow.stages[0];
-          const firstStageUsesInput =
-            ('prompt' in firstStage && firstStage.prompt?.includes('{{input}}')) ||
-            ('command' in firstStage && firstStage.command?.includes('{{input}}')) ||
-            ('message' in firstStage && firstStage.message?.includes('{{input}}')) ||
-            ('content' in firstStage && firstStage.content?.includes('{{input}}')) ||
-            ('url' in firstStage && firstStage.url?.includes('{{input}}'));
-
-          if (firstStageUsesInput) {
-            console.error(
-              chalk.red('Error: provide --prompt <text> or --prompt-file <path>'),
-            );
-            process.exit(1);
-          }
-          prompt = '';
         } else {
-          prompt = '';
+          prompt = opts.prompt ?? '';
         }
 
         // Parse --var KEY=VALUE pairs

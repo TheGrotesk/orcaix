@@ -6,6 +6,7 @@ import { executeFileStage } from './file.js';
 import { executeHTTPStage } from './http.js';
 import { executeInputStage } from './input.js';
 import { executeLoopStage } from './loop.js';
+import { executeWorkflowStage } from './workflow.js';
 
 /**
  * Dispatch a stage to the appropriate handler and return its output string.
@@ -28,6 +29,8 @@ export async function executeStage(
       return executeInputStage(stage, ctx, currentInput);
     case 'loop':
       return executeLoopStage(stage, ctx, currentInput);
+    case 'workflow':
+      return executeWorkflowStage(stage, ctx, currentInput);
     default: {
       const exhaustive = stage as { type: string };
       throw new Error(`Unknown stage type: ${exhaustive.type}`);

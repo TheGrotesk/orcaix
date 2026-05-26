@@ -10,6 +10,10 @@ export interface ExecutionContext {
   timestamp: string;
   vars: Record<string, string>;
   templates: Record<string, string>;
+  /** Absolute directory of the workflow file — used to resolve sub-workflow paths. */
+  workflowDir: string;
+  /** When true, sub-workflows should also dry-run. */
+  dryRun?: boolean;
 }
 
 /**
@@ -19,6 +23,8 @@ export function createContext(
   prompt: string,
   vars: Record<string, string> = {},
   templates: Record<string, string> = {},
+  workflowDir: string = process.cwd(),
+  dryRun?: boolean,
 ): ExecutionContext {
   return {
     input: prompt,
@@ -29,6 +35,8 @@ export function createContext(
     timestamp: new Date().toISOString().replace(/[:.]/g, '-'),
     vars,
     templates,
+    workflowDir,
+    dryRun,
   };
 }
 
