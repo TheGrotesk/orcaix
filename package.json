@@ -1,16 +1,53 @@
 {
-  "name": "aiac",
-  "version": "0.1.0",
+  "name": "@thegrotesk/aiac",
+  "version": "0.1.1",
   "description": "AI as Code - run AI agent workflows from YAML",
   "type": "module",
+  "license": "MIT",
+  "author": "TheGrotesk",
+  "homepage": "https://docs-smoky-theta.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheGrotesk/aiac.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TheGrotesk/aiac/issues"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "workflow",
+    "automation",
+    "yaml",
+    "cli",
+    "agent",
+    "anthropic",
+    "openai",
+    "gemini",
+    "claude",
+    "gpt"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "bin": {
     "aiac": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/cli.ts",
     "start": "node dist/cli.js",
-    "docs": "npx serve docs -l 4000"
+    "docs": "npx serve docs -l 4000",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -26,7 +63,9 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^4.1.7",
     "tsx": "^4.7.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "vitest": "^4.1.7"
   }
 }
