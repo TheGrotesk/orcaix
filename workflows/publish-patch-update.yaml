@@ -79,8 +79,15 @@ stages:
     type: shell
     command: git add package.json package-lock.json docs/index.html README.md
 
+  - id: ask_commit_message
+    type: input
+    message: |
+      Enter a commit message (or press Enter to use the default):
+      Default: "bump version to {{stages.read_new_version.output}}"
+    placeholder: "bump version to {{stages.read_new_version.output}}"
+
   - id: commit_and_push
     type: shell
     command: >
-      git commit -m "bump version to {{stages.read_new_version.output}}" &&
+      git commit -m "{{stages.ask_commit_message.output}}" &&
       git push
