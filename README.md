@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/logo.png" alt="orcaix" width="80" />
+<img src="docs/assets/logo.jpg" alt="orcaix" width="80" />
 
 # orcaix
 
