@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aiac — AI as Code</title>
+  <title>orcaix</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
@@ -66,6 +66,16 @@
       padding: 20px 20px 16px;
       border-bottom: 1px solid var(--sidebar-border);
       margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      flex-shrink: 0;
     }
 
     .sidebar-logo .wordmark {
@@ -247,6 +257,14 @@
       padding: 48px 0 32px;
       border-bottom: 1px solid var(--border);
       margin-bottom: 8px;
+    }
+
+    .hero-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      display: block;
     }
 
     .hero-badge {
@@ -453,8 +471,11 @@
 <!-- ── Sidebar ─────────────────────────────────────────────────────────────── -->
 <nav class="sidebar">
   <div class="sidebar-logo">
-    <div class="wordmark">ai<span>ac</span></div>
-    <div class="tagline">AI as Code · v0.1.5</div>
+    <img src="assets/logo.jpg" alt="orcaix logo" />
+    <div>
+      <div class="wordmark">orca<span>ix</span></div>
+      <div class="tagline">orcaix · v0.1.5</div>
+    </div>
   </div>
 
   <div class="nav-section">
@@ -485,9 +506,9 @@
 
   <div class="nav-section">
     <div class="nav-section-title">CLI Reference</div>
-    <a href="#cli-run">aiac run</a>
-    <a href="#cli-validate">aiac validate</a>
-    <a href="#cli-init">aiac init</a>
+    <a href="#cli-run">orcaix run</a>
+    <a href="#cli-validate">orcaix validate</a>
+    <a href="#cli-init">orcaix init</a>
   </div>
 
   <div class="nav-section">
@@ -527,8 +548,9 @@
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="overview">
 <div class="hero">
+  <img src="assets/logo.jpg" alt="orcaix" class="hero-logo" />
   <div class="hero-badge">⚡ v0.1.5</div>
-  <h1>AI as Code</h1>
+  <h1>orcaix</h1>
   <p>Define AI agent workflows in YAML. Chain LLMs, shell commands, file operations, and HTTP calls into repeatable pipelines — with human approval gates, branching logic, and built-in resume from failure.</p>
 </div>
 
@@ -563,10 +585,10 @@
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">npm install -g @thegrotesk/aiac</code></pre>
+  <pre><code class="language-bash">npm install -g @thegrotesk/orcaix</code></pre>
 </div>
 
-<p>Set your provider API keys as environment variables, or put them in a <code>.env</code> file in the directory you run <code>aiac</code> from:</p>
+<p>Set your provider API keys as environment variables, or put them in a <code>.env</code> file in the directory you run <code>orcaix</code> from:</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">.env</span><button class="copy-btn">Copy</button></div>
@@ -580,13 +602,13 @@ GEMINI_API_KEY=AIza...</code></pre>
 ═══════════════════════════════════════════════════════════════════════════ -->
 <h2 id="quickstart">Quick Start</h2>
 
-<p>Create a workflow file, or scaffold one with <code>aiac init</code>:</p>
+<p>Create a workflow file, or scaffold one with <code>orcaix init</code>:</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">aiac init my-workflow        # scaffold a starter YAML
-aiac validate my-workflow.yaml   # check for schema errors
-aiac run my-workflow.yaml --prompt "your input here"</code></pre>
+  <pre><code class="language-bash">orcaix init my-workflow        # scaffold a starter YAML
+orcaix validate my-workflow.yaml   # check for schema errors
+orcaix run my-workflow.yaml --prompt "your input here"</code></pre>
 </div>
 
 <p>Here's the simplest possible workflow — a single LLM call:</p>
@@ -605,7 +627,7 @@ stages:
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">aiac run hello.yaml --prompt "Alice"
+  <pre><code class="language-bash">orcaix run hello.yaml --prompt "Alice"
 # → Hello, Alice! It's wonderful to meet you.</code></pre>
 </div>
 
@@ -812,13 +834,13 @@ stages:
 ═══════════════════════════════════════════════════════════════════════════ -->
 <h2 id="checkpoints">Checkpoints</h2>
 
-<p>aiac automatically saves a checkpoint after every completed stage. If the workflow fails or is interrupted mid-run, you can resume from where it stopped — saving expensive LLM calls.</p>
+<p>orcaix automatically saves a checkpoint after every completed stage. If the workflow fails or is interrupted mid-run, you can resume from where it stopped — saving expensive LLM calls.</p>
 
-<p>Checkpoints are stored in <code>.aiac-checkpoints/</code> in the current working directory, keyed by a hash of the workflow path + prompt. Each checkpoint records completed stage outputs, current vars, and the next stage index.</p>
+<p>Checkpoints are stored in <code>.orcaix-checkpoints/</code> in the current working directory, keyed by a hash of the workflow path + prompt. Each checkpoint records completed stage outputs, current vars, and the next stage index.</p>
 
 <h3>Resume behavior</h3>
 
-<p>The next time you run the same workflow with the same prompt, aiac detects the checkpoint:</p>
+<p>The next time you run the same workflow with the same prompt, orcaix detects the checkpoint:</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">terminal</span><button class="copy-btn">Copy</button></div>
@@ -1219,11 +1241,11 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════════════════
      CLI REFERENCE
 ═══════════════════════════════════════════════════════════════════════════ -->
-<h2 id="cli-run">CLI: <code>aiac run</code></h2>
+<h2 id="cli-run">CLI: <code>orcaix run</code></h2>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">aiac run &lt;workflow.yaml&gt; [options]</code></pre>
+  <pre><code class="language-bash">orcaix run &lt;workflow.yaml&gt; [options]</code></pre>
 </div>
 
 <div class="table-wrap">
@@ -1242,27 +1264,27 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 </table>
 </div>
 
-<h2 id="cli-validate">CLI: <code>aiac validate</code></h2>
+<h2 id="cli-validate">CLI: <code>orcaix validate</code></h2>
 
 <p>Validates the workflow YAML schema and resolves all template imports without executing anything.</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">aiac validate workflow.yaml
+  <pre><code class="language-bash">orcaix validate workflow.yaml
 # ✓ "My Workflow" is valid
 #   8 stage(s): analyze, approve_plan, create_plan, ...
 #   imports: ./templates/personas.yaml (10 template(s) loaded)</code></pre>
 </div>
 
-<h2 id="cli-init">CLI: <code>aiac init</code></h2>
+<h2 id="cli-init">CLI: <code>orcaix init</code></h2>
 
 <p>Scaffolds a new workflow YAML file with placeholder stages and comments.</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">aiac init my-workflow
+  <pre><code class="language-bash">orcaix init my-workflow
 # Created my-workflow.yaml
-# Run with: aiac run my-workflow.yaml --prompt "your input"</code></pre>
+# Run with: orcaix run my-workflow.yaml --prompt "your input"</code></pre>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -1439,7 +1461,7 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 <!-- ─────────────────────────────────────────────────────────────────────── -->
 <h2 id="pattern-claude-code">Pattern: Delegate to Claude Code</h2>
 
-<p>Use aiac for planning and approval, then hand off implementation to Claude Code's interactive session. Claude Code has full filesystem and shell access — it can browse the codebase, run commands, and iterate autonomously.</p>
+<p>Use orcaix for planning and approval, then hand off implementation to Claude Code's interactive session. Claude Code has full filesystem and shell access — it can browse the codebase, run commands, and iterate autonomously.</p>
 
 <div class="flow">
   <div class="flow-step">Opus: plan</div>
@@ -1458,7 +1480,7 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
   <pre><code class="language-yaml">- id: save_plan
   type: file
   action: write
-  path: /tmp/aiac_plan.txt
+  path: /tmp/orcaix_plan.txt
   content: "{{stages.analyze.output}}"
   next:
     - stage: implement
@@ -1468,18 +1490,18 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
   interactive: true
   # Opens Claude Code with the plan. Type /exit when done.
   # Add --dangerously-skip-permissions to auto-approve all file/shell actions.
-  command: claude --model sonnet "$(cat /tmp/aiac_plan.txt)"</code></pre>
+  command: claude --model sonnet "$(cat /tmp/orcaix_plan.txt)"</code></pre>
 </div>
 
 <div class="callout callout-tip">
   <div class="callout-icon">💡</div>
-  <div class="callout-content"><strong>Run from your project root.</strong> The shell stage inherits aiac's CWD, so Claude Code automatically operates on your project directory.</div>
+  <div class="callout-content"><strong>Run from your project root.</strong> The shell stage inherits orcaix's CWD, so Claude Code automatically operates on your project directory.</div>
 </div>
 
 <!-- ─────────────────────────────────────────────────────────────────────── -->
 <h2 id="pattern-codex">Pattern: Delegate to Codex</h2>
 
-<p>Same aiac orchestration pattern — Opus plans, you approve — but implementation is handed off to <strong>OpenAI Codex CLI</strong>. Codex opens its interactive TUI with the plan as the first message. When you exit, the workflow resumes with typecheck, tests, and PR description.</p>
+<p>Same orcaix orchestration pattern — Opus plans, you approve — but implementation is handed off to <strong>OpenAI Codex CLI</strong>. Codex opens its interactive TUI with the plan as the first message. When you exit, the workflow resumes with typecheck, tests, and PR description.</p>
 
 <div class="flow">
   <div class="flow-step">Opus: plan</div>
@@ -1500,14 +1522,14 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
   interactive: true
   # Interactive TUI — Codex prompts for approval on each action.
   # Press Q or Ctrl+C when done to return to the workflow.
-  command: codex "$(cat /tmp/aiac_codex_plan.txt)"
+  command: codex "$(cat /tmp/orcaix_codex_plan.txt)"
 
   # ── Autonomous alternatives ──────────────────────────────────────────────
   # Safe: can write files in workspace, asks before shell commands
-  # command: codex exec --sandbox workspace-write --model o3 "$(cat /tmp/aiac_codex_plan.txt)"
+  # command: codex exec --sandbox workspace-write --model o3 "$(cat /tmp/orcaix_codex_plan.txt)"
   #
   # Full auto: bypass all approvals and sandbox restrictions
-  # command: codex exec --dangerously-bypass-approvals-and-sandbox --model o3 "$(cat /tmp/aiac_codex_plan.txt)"</code></pre>
+  # command: codex exec --dangerously-bypass-approvals-and-sandbox --model o3 "$(cat /tmp/orcaix_codex_plan.txt)"</code></pre>
 </div>
 
 <h3>Claude Code vs Codex — quick comparison</h3>
@@ -1528,7 +1550,7 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 
 <div class="callout callout-info">
   <div class="callout-icon">ℹ️</div>
-  <div class="callout-content"><strong>Both workflows use the same aiac plan stages.</strong> The only difference is the <code>implement</code> shell stage and its temp file path (<code>/tmp/aiac_cc_plan.txt</code> vs <code>/tmp/aiac_codex_plan.txt</code>), so they can run in parallel without conflict.</div>
+  <div class="callout-content"><strong>Both workflows use the same orcaix plan stages.</strong> The only difference is the <code>implement</code> shell stage and its temp file path (<code>/tmp/orcaix_cc_plan.txt</code> vs <code>/tmp/orcaix_codex_plan.txt</code>), so they can run in parallel without conflict.</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -1536,14 +1558,14 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 ═══════════════════════════════════════════════════════════════════════════ -->
 <h2 id="gh-overview">GitHub Actions Integration</h2>
 
-<p>aiac workflows run cleanly in CI — as long as you use no <code>input</code> stages or <code>approve: true</code> loops (those require a TTY). The pattern: the Action writes the PR diff to a temp file, runs aiac headlessly, and posts the compiled review as a PR comment.</p>
+<p>orcaix workflows run cleanly in CI — as long as you use no <code>input</code> stages or <code>approve: true</code> loops (those require a TTY). The pattern: the Action writes the PR diff to a temp file, runs orcaix headlessly, and posts the compiled review as a PR comment.</p>
 
 <div class="flow">
   <div class="flow-step">PR opened / pushed</div>
   <div class="flow-arrow">→</div>
   <div class="flow-step">git diff → /tmp/pr_diff.txt</div>
   <div class="flow-arrow">→</div>
-  <div class="flow-step accent">aiac run pr-review.yaml</div>
+  <div class="flow-step accent">orcaix run pr-review.yaml</div>
   <div class="flow-arrow">→</div>
   <div class="flow-step">gh pr comment</div>
 </div>
@@ -1554,9 +1576,9 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 <table>
   <thead><tr><th></th><th>Option A — workflow posts</th><th>Option B — action posts</th></tr></thead>
   <tbody>
-    <tr><td><strong>How</strong></td><td>Final stage in the aiac workflow runs <code>gh pr comment</code></td><td>aiac writes report to file; Action YAML posts it</td></tr>
+    <tr><td><strong>How</strong></td><td>Final stage in the orcaix workflow runs <code>gh pr comment</code></td><td>orcaix writes report to file; Action YAML posts it</td></tr>
     <tr><td><strong>Best for</strong></td><td>Keeping all logic inside the workflow YAML</td><td>More control — deduplication, sticky comments, custom formatting</td></tr>
-    <tr><td><strong>GITHUB_TOKEN</strong></td><td>Passed as env var to aiac process</td><td>Used directly in the Action step</td></tr>
+    <tr><td><strong>GITHUB_TOKEN</strong></td><td>Passed as env var to orcaix process</td><td>Used directly in the Action step</td></tr>
     <tr><td><strong>Template file</strong></td><td><code>pr-review-option-a.yml</code></td><td><code>pr-review-option-b.yml</code></td></tr>
   </tbody>
 </table>
@@ -1566,7 +1588,7 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 
 <p><strong>File:</strong> <code>workflows/ci/pr-review.yaml</code></p>
 
-<p>The workflow is CI-safe (no human gates). It reads the diff from <code>/tmp/pr_diff.txt</code> — written by the Action before aiac runs — then fans out to three LLM reviewers and compiles everything into a single GitHub comment.</p>
+<p>The workflow is CI-safe (no human gates). It reads the diff from <code>/tmp/pr_diff.txt</code> — written by the Action before orcaix runs — then fans out to three LLM reviewers and compiles everything into a single GitHub comment.</p>
 
 <div class="flow">
   <div class="flow-step">load_diff</div>
@@ -1593,8 +1615,8 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
     <tr><td><code>review_security</code></td><td>llm · Sonnet</td><td>Injection, auth bypasses, hardcoded secrets, unsafe input. Severity-prefixed: 🔴/🟡/🔵.</td></tr>
     <tr><td><code>review_tests</code></td><td>llm · Haiku</td><td>Untested branches, missing edge cases, tests that need updating.</td></tr>
     <tr><td><code>compile_report</code></td><td>llm · Haiku</td><td>Formats all three reviews into one GitHub-flavored markdown comment.</td></tr>
-    <tr><td><code>save_report</code></td><td>file: write</td><td>Writes compiled report to <code>/tmp/aiac_pr_review.md</code>.</td></tr>
-    <tr><td><code>post_comment</code></td><td>shell</td><td>Runs <code>gh pr comment {{env.PR_NUMBER}} --body-file /tmp/aiac_pr_review.md</code>. Option A only — remove for Option B.</td></tr>
+    <tr><td><code>save_report</code></td><td>file: write</td><td>Writes compiled report to <code>/tmp/orcaix_pr_review.md</code>.</td></tr>
+    <tr><td><code>post_comment</code></td><td>shell</td><td>Runs <code>gh pr comment {{env.PR_NUMBER}} --body-file /tmp/orcaix_pr_review.md</code>. Option A only — remove for Option B.</td></tr>
   </tbody>
 </table>
 </div>
@@ -1618,12 +1640,12 @@ Resume from checkpoint? (yes / no — "no" starts fresh) _</code></pre>
 - ✅ New utility functions have corresponding tests
 
 ---
-Reviewed by aiac · `claude-sonnet-4-6`</code></pre>
+Reviewed by orcaix · `claude-sonnet-4-6`</code></pre>
 </div>
 
 <h2 id="gh-option-a">Option A — Workflow Posts the Comment</h2>
 
-<p>The aiac workflow itself has a final <code>post_comment</code> shell stage. The Action just runs aiac and provides <code>GITHUB_TOKEN</code> + <code>PR_NUMBER</code> as env vars.</p>
+<p>The orcaix workflow itself has a final <code>post_comment</code> shell stage. The Action just runs orcaix and provides <code>GITHUB_TOKEN</code> + <code>PR_NUMBER</code> as env vars.</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">.github/workflows/pr-review.yml — Option A</span><button class="copy-btn">Copy</button></div>
@@ -1649,8 +1671,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install aiac
-        run: npm install -g @thegrotesk/aiac
+      - name: Install orcaix
+        run: npm install -g @thegrotesk/orcaix
 
       - name: Generate PR diff
         run: |
@@ -1659,30 +1681,30 @@ jobs:
             | head -c 60000 \
             > /tmp/pr_diff.txt
 
-      - name: Run aiac PR review
+      - name: Run orcaix PR review
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          aiac run workflows/ci/pr-review.yaml \
+          orcaix run workflows/ci/pr-review.yaml \
             --prompt "PR #$PR_NUMBER" \
             --fresh</code></pre>
 </div>
 
 <h2 id="gh-option-b">Option B — Action Posts the Comment</h2>
 
-<p>Remove the <code>post_comment</code> stage from the workflow. aiac writes the report to <code>/tmp/aiac_pr_review.md</code> via <code>save_report</code>; the Action posts it. Use this when you want deduplication (e.g. <a href="https://github.com/marocchino/sticky-pull-request-comment">sticky-pull-request-comment</a>) or custom formatting.</p>
+<p>Remove the <code>post_comment</code> stage from the workflow. orcaix writes the report to <code>/tmp/orcaix_pr_review.md</code> via <code>save_report</code>; the Action posts it. Use this when you want deduplication (e.g. <a href="https://github.com/marocchino/sticky-pull-request-comment">sticky-pull-request-comment</a>) or custom formatting.</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">.github/workflows/pr-review.yml — Option B</span><button class="copy-btn">Copy</button></div>
   <pre><code class="language-yaml">      # ... same checkout / setup / diff steps as Option A ...
 
-      - name: Run aiac PR review
+      - name: Run orcaix PR review
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          aiac run workflows/ci/pr-review.yaml \
+          orcaix run workflows/ci/pr-review.yaml \
             --prompt "PR #${{ github.event.pull_request.number }}" \
             --fresh
 
@@ -1691,13 +1713,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr comment ${{ github.event.pull_request.number }} \
-            --body-file /tmp/aiac_pr_review.md \
+            --body-file /tmp/orcaix_pr_review.md \
             --repo ${{ github.repository }}
 
       # To update existing comment instead of creating a new one on each push:
       # - uses: marocchino/sticky-pull-request-comment@v2
       #   with:
-      #     path: /tmp/aiac_pr_review.md</code></pre>
+      #     path: /tmp/orcaix_pr_review.md</code></pre>
 </div>
 
 <h2 id="gh-tips">Tips &amp; Gotchas</h2>
@@ -1706,7 +1728,7 @@ jobs:
 <p>Workflows running in GitHub Actions must not contain <code>input</code> stages or <code>loop</code> stages with <code>approve: true</code> — both require a TTY. Create separate <code>workflows/ci/</code> variants for automation and keep the interactive versions in <code>workflows/dev/</code>.</p>
 
 <h3>Diff size limits</h3>
-<p>Large PRs can exceed model context limits. The Action examples cap the diff at 60 KB with <code>head -c 60000</code>. For very large PRs, filter to specific file types or split into multiple aiac runs per directory.</p>
+<p>Large PRs can exceed model context limits. The Action examples cap the diff at 60 KB with <code>head -c 60000</code>. For very large PRs, filter to specific file types or split into multiple orcaix runs per directory.</p>
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash — limit diff by path or size</span><button class="copy-btn">Copy</button></div>
@@ -1731,7 +1753,7 @@ git diff origin/$BASE...HEAD \
 </div>
 
 <h3>Using <code>--fresh</code> in CI</h3>
-<p>Always pass <code>--fresh</code> in CI runs. Without it, aiac will look for a checkpoint from a previous run and prompt interactively — which hangs the job.</p>
+<p>Always pass <code>--fresh</code> in CI runs. Without it, orcaix will look for a checkpoint from a previous run and prompt interactively — which hangs the job.</p>
 
 <h3>Avoid duplicate comments on re-runs</h3>
 <p>By default, each push creates a new comment. Use <a href="https://github.com/marocchino/sticky-pull-request-comment">sticky-pull-request-comment</a> (Option B) or add a <code>shell</code> stage that first deletes any existing bot comment before posting.</p>
@@ -1786,7 +1808,7 @@ stages:
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">cat src/auth.ts | aiac run examples/code-review.yaml --prompt "$(cat src/auth.ts)"</code></pre>
+  <pre><code class="language-bash">cat src/auth.ts | orcaix run examples/code-review.yaml --prompt "$(cat src/auth.ts)"</code></pre>
 </div>
 
 <!-- ─────────────────────────────────────────────────────────────────────── -->
@@ -1797,7 +1819,7 @@ stages:
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
   <pre><code class="language-bash">cd /my/project
-aiac run examples/develop-feature.yaml \
+orcaix run examples/develop-feature.yaml \
   --prompt "Add rate limiting to the /api/users endpoint"</code></pre>
 </div>
 
@@ -1816,7 +1838,7 @@ aiac run examples/develop-feature.yaml \
 
 <div class="code-block">
   <div class="code-header"><span class="code-label">bash</span><button class="copy-btn">Copy</button></div>
-  <pre><code class="language-bash">aiac run examples/incident-response.yaml \
+  <pre><code class="language-bash">orcaix run examples/incident-response.yaml \
   --prompt "OOMKilled on api-server pod, 3 restarts in 10min, p95 latency spiked to 8s"</code></pre>
 </div>
 

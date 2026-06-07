@@ -70,9 +70,9 @@ describe('executeShellStage', () => {
 
   it('passes environment variables from ctx.env to the child process', async () => {
     const localCtx = createContext('test');
-    localCtx.env['AIAC_SHELL_TEST'] = 'shell_env_value';
+    localCtx.env['ORCAIX_SHELL_TEST'] = 'shell_env_value';
     const result = await executeShellStage(
-      stage({ command: 'echo $AIAC_SHELL_TEST' }),
+      stage({ command: 'echo $ORCAIX_SHELL_TEST' }),
       localCtx,
       'unused',
     );

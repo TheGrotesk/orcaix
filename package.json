@@ -1,17 +1,17 @@
 {
-  "name": "@thegrotesk/aiac",
+  "name": "@thegrotesk/orcaix",
   "version": "0.1.5",
-  "description": "AI as Code - run AI agent workflows from YAML",
+  "description": "Orcaix - run AI agent workflows from YAML",
   "type": "module",
   "license": "GPL-3.0",
   "author": "TheGrotesk",
   "homepage": "https://docs-smoky-theta.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheGrotesk/aiac.git"
+    "url": "https://github.com/TheGrotesk/orcaix.git"
   },
   "bugs": {
-    "url": "https://github.com/TheGrotesk/aiac/issues"
+    "url": "https://github.com/TheGrotesk/orcaix/issues"
   },
   "keywords": [
     "ai",
@@ -25,13 +25,14 @@
     "openai",
     "gemini",
     "claude",
-    "gpt"
+    "gpt",
+    "orcaix"
   ],
   "engines": {
     "node": ">=20"
   },
   "bin": {
-    "aiac": "./dist/cli.js"
+    "orcaix": "./dist/cli.js"
   },
   "files": [
     "dist",

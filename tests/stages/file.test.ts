@@ -6,7 +6,7 @@ import { createContext } from '../../src/context.js';
 import type { FileStage } from '../../src/types.js';
 import type { ExecutionContext } from '../../src/context.js';
 
-const TMP = resolve('/tmp/aiac-file-stage-tests');
+const TMP = resolve('/tmp/orcaix-file-stage-tests');
 
 let ctx: ExecutionContext;
 

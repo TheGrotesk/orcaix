@@ -6,3 +6,4 @@ dist/
 reviews/
 reports/
 .aiac-checkpoints/
+.vercel

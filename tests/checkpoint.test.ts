@@ -5,8 +5,8 @@ import { checkpointKey, loadCheckpoint, saveCheckpoint, clearCheckpoint } from '
 import type { CheckpointData } from '../src/checkpoint.js';
 
 // Run tests in a temp directory so they don't pollute the project root
-const TEST_CWD = resolve('/tmp/aiac-checkpoint-tests');
-const CHECKPOINT_DIR = join(TEST_CWD, '.aiac-checkpoints');
+const TEST_CWD = resolve('/tmp/orcaix-checkpoint-tests');
+const CHECKPOINT_DIR = join(TEST_CWD, '.orcaix-checkpoints');
 
 // checkpointKey, saveCheckpoint, loadCheckpoint, clearCheckpoint all resolve paths
 // from process.cwd(), so we change CWD for the duration of these tests.
@@ -80,7 +80,7 @@ describe('saveCheckpoint / loadCheckpoint / clearCheckpoint', () => {
     expect(loaded!.nextIndex).toBe(1);
   });
 
-  it('creates the .aiac-checkpoints directory if it does not exist', () => {
+  it('creates the .orcaix-checkpoints directory if it does not exist', () => {
     const key = checkpointKey('/project/workflow.yaml', 'hello');
     expect(existsSync(CHECKPOINT_DIR)).toBe(false);
     saveCheckpoint(key, SAMPLE);

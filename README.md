@@ -1,21 +1,23 @@
 <div align="center">
 
-# aiac
+<img src="docs/assets/logo.jpg" alt="orcaix" width="80" />
 
-**AI as Code — run AI agent workflows defined in YAML**
+# orcaix
 
-[![Version](https://img.shields.io/badge/version-0.1.5-6366f1?style=flat-square)](https://github.com/TheGrotesk/aiac/releases/tag/v0.1.5)
+**Orcaix — run AI agent workflows defined in YAML**
+
+[![Version](https://img.shields.io/badge/version-0.1.5-6366f1?style=flat-square)](https://github.com/TheGrotesk/orcaix/releases/tag/v0.1.5)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License](https://img.shields.io/badge/license-GPL--v3-blue?style=flat-square)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-live-10b981?style=flat-square)](https://docs-smoky-theta.vercel.app)
+[![Docs](https://img.shields.io/badge/docs-live-10b981?style=flat-square)](https://orcaix-docs.vercel.app)
 
-[Documentation](https://docs-smoky-theta.vercel.app) · [Examples](#examples) · [Releases](https://github.com/TheGrotesk/aiac/releases)
+[Documentation](https://orcaix-docs.vercel.app) · [Examples](#examples) · [Releases](https://github.com/TheGrotesk/orcaix/releases)
 
 </div>
 
 ---
 
-**aiac** lets you define multi-step AI workflows as YAML files and run them from the CLI. Chain LLM calls across providers, shell commands, file operations, and HTTP requests — with human approval gates, conditional branching, and automatic resume from the last completed stage after any failure.
+**orcaix** lets you define multi-step AI workflows as YAML files and run them from the CLI. Chain LLM calls across providers, shell commands, file operations, and HTTP requests — with human approval gates, conditional branching, and automatic resume from the last completed stage after any failure.
 
 ```yaml
 name: PR Code Review
@@ -35,7 +37,7 @@ stages:
 ```
 
 ```bash
-aiac run pr-review.yaml --prompt "$(git diff main...HEAD)"
+orcaix run pr-review.yaml --prompt "$(git diff main...HEAD)"
 ```
 
 ---
@@ -59,16 +61,16 @@ aiac run pr-review.yaml --prompt "$(git diff main...HEAD)"
 ## Install
 
 ```bash
-npm install -g @thegrotesk/aiac
+npm install -g @thegrotesk/orcaix
 ```
 
 Or build from source:
 
 ```bash
-git clone https://github.com/TheGrotesk/aiac.git
-cd aiac
+git clone https://github.com/TheGrotesk/orcaix.git
+cd orcaix
 npm install && npm run build
-npm link          # makes `aiac` available globally
+npm link          # makes `orcaix` available globally
 ```
 
 Add your API keys — only the providers you use are required:
@@ -86,16 +88,16 @@ GEMINI_API_KEY=AIza...
 
 ```bash
 # Scaffold a new workflow
-aiac init my-workflow
+orcaix init my-workflow
 
 # Validate without running
-aiac validate my-workflow.yaml
+orcaix validate my-workflow.yaml
 
 # Dry run — prints all stages, no API calls
-aiac run my-workflow.yaml --prompt "hello" --dry-run
+orcaix run my-workflow.yaml --prompt "hello" --dry-run
 
 # Run for real
-aiac run my-workflow.yaml --prompt "your input here"
+orcaix run my-workflow.yaml --prompt "your input here"
 ```
 
 ---
@@ -347,7 +349,7 @@ Conditions are JS expressions with `output` in scope. First match wins. If no co
 
 ## Checkpoints
 
-aiac automatically saves a checkpoint after every completed stage. If the run fails or is interrupted, the next invocation detects it:
+orcaix automatically saves a checkpoint after every completed stage. If the run fails or is interrupted, the next invocation detects it:
 
 ```
 Checkpoint found — started 2024-01-15T10:32, last updated 2024-01-15T10:38
@@ -357,19 +359,19 @@ Resume from checkpoint? (yes / no)
 ```
 
 ```bash
-aiac run workflow.yaml --prompt "..." --resume   # resume without prompting
-aiac run workflow.yaml --prompt "..." --fresh    # ignore checkpoint, start over
+orcaix run workflow.yaml --prompt "..." --resume   # resume without prompting
+orcaix run workflow.yaml --prompt "..." --fresh    # ignore checkpoint, start over
 ```
 
-Checkpoints are stored in `.aiac-checkpoints/` (keyed by a hash of workflow path + prompt). They are deleted automatically on successful completion.
+Checkpoints are stored in `.orcaix-checkpoints/` (keyed by a hash of workflow path + prompt). They are deleted automatically on successful completion.
 
-> **Always pass `--fresh` in CI.** Without it, aiac will look for a checkpoint and prompt interactively, hanging the job.
+> **Always pass `--fresh` in CI.** Without it, orcaix will look for a checkpoint and prompt interactively, hanging the job.
 
 ---
 
 ## CLI Reference
 
-### `aiac run <workflow>`
+### `orcaix run <workflow>`
 
 ```
 Options:
@@ -383,11 +385,11 @@ Options:
       --fresh               Ignore checkpoint, start fresh
 ```
 
-### `aiac validate <workflow>`
+### `orcaix validate <workflow>`
 
 Validates the YAML schema and resolves all template imports. No API calls.
 
-### `aiac init <name>`
+### `orcaix init <name>`
 
 Scaffolds a new workflow YAML file with example stages and comments.
 
@@ -415,12 +417,12 @@ Automate PR reviews with the included CI workflow and Action templates:
 - name: Generate PR diff
   run: git diff origin/${{ github.base_ref }}...HEAD | head -c 60000 > /tmp/pr_diff.txt
 
-- name: Run aiac PR review
+- name: Run orcaix PR review
   env:
     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
-  run: aiac run workflows/ci/pr-review.yaml --prompt "PR #$PR_NUMBER" --fresh
+  run: orcaix run workflows/ci/pr-review.yaml --prompt "PR #$PR_NUMBER" --fresh
 ```
 
 The [`workflows/ci/pr-review.yaml`](examples/github-actions/) workflow runs three reviewers (quality, security, test coverage), compiles a single comment, and posts it to the PR. Two posting strategies are available — see [`examples/github-actions/`](examples/github-actions/).
@@ -440,13 +442,13 @@ Use `interactive: true` to hand off implementation to an AI coding agent mid-wor
 ```
 
 Ready-to-use workflows in `startup-workflows/workflows/dev/`:
-- [`delegate-to-claude-code.yaml`](https://github.com/TheGrotesk/aiac) — Opus plans → you approve → Claude Code implements
-- [`delegate-to-codex.yaml`](https://github.com/TheGrotesk/aiac) — same flow with OpenAI Codex
+- [`delegate-to-claude-code.yaml`](https://github.com/TheGrotesk/orcaix) — Opus plans → you approve → Claude Code implements
+- [`delegate-to-codex.yaml`](https://github.com/TheGrotesk/orcaix) — same flow with OpenAI Codex
 
 ---
 
 <div align="center">
 
-**[📖 Full Documentation](https://docs-smoky-theta.vercel.app)**
+**[📖 Full Documentation](https://orcaix-docs.vercel.app)**
 
 </div>

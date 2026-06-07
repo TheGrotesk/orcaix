@@ -13,11 +13,11 @@ const { version } = require('../package.json') as { version: string };
 const program = new Command();
 
 program
-  .name('aiac')
-  .description('AI as Code — run AI agent workflows from YAML files')
+  .name('orcaix')
+  .description('Orcaix — run AI agent workflows from YAML files')
   .version(version);
 
-// ── aiac run ─────────────────────────────────────────────────────────────────
+// ── orcaix run ─────────────────────────────────────────────────────────────────
 
 program
   .command('run <workflow>')
@@ -99,7 +99,7 @@ program
     },
   );
 
-// ── aiac validate ─────────────────────────────────────────────────────────────
+// ── orcaix validate ─────────────────────────────────────────────────────────────
 
 program
   .command('validate <workflow>')
@@ -121,7 +121,7 @@ program
     }
   });
 
-// ── aiac init ─────────────────────────────────────────────────────────────────
+// ── orcaix init ─────────────────────────────────────────────────────────────────
 
 program
   .command('init <name>')
@@ -170,7 +170,7 @@ stages:
 
     writeFileSync(fileName, template, 'utf-8');
     console.log(chalk.green(`Created ${fileName}`));
-    console.log(chalk.gray(`Run with: aiac run ${fileName} --prompt "your input"`));
+    console.log(chalk.gray(`Run with: orcaix run ${fileName} --prompt "your input"`));
   });
 
 // ── Parse ─────────────────────────────────────────────────────────────────────

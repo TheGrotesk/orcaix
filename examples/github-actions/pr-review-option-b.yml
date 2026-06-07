@@ -1,4 +1,4 @@
-# Option B — the GitHub Action posts the PR comment after aiac finishes.
+# Option B — the GitHub Action posts the PR comment after orcaix finishes.
 # Remove the `post_comment` stage from pr-review.yaml when using this approach,
 # or keep it — the action step below overwrites any duplicate comments anyway.
 #
@@ -31,10 +31,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install aiac
+      - name: Install orcaix
         run: |
-          git clone https://github.com/your-org/aiac.git /tmp/aiac
-          cd /tmp/aiac && npm ci && npm run build && npm link
+          git clone https://github.com/TheGrotesk/orcaix.git /tmp/orcaix
+          npm install -g @thegrotesk/orcaix
 
       - name: Generate PR diff
         run: |
@@ -44,14 +44,14 @@ jobs:
             > /tmp/pr_diff.txt
           echo "Diff size: $(wc -c < /tmp/pr_diff.txt) bytes"
 
-      - name: Run aiac PR review
+      - name: Run orcaix PR review
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           # --output captures the final stage output (the compiled report)
-          aiac run startup-workflows/workflows/ci/pr-review.yaml \
+          orcaix run startup-workflows/workflows/ci/pr-review.yaml \
             --prompt "PR #${{ github.event.pull_request.number }}" \
-            --output /tmp/aiac_pr_review.md \
+            --output /tmp/orcaix_pr_review.md \
             --fresh
 
       - name: Post PR comment
@@ -59,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr comment ${{ github.event.pull_request.number }} \
-            --body-file /tmp/aiac_pr_review.md \
+            --body-file /tmp/orcaix_pr_review.md \
             --repo ${{ github.repository }}
 
       # Optional: update instead of duplicate on re-runs.
@@ -68,5 +68,5 @@ jobs:
       # - name: Post or update PR comment
       #   uses: marocchino/sticky-pull-request-comment@v2
       #   with:
-      #     path: /tmp/aiac_pr_review.md
+      #     path: /tmp/orcaix_pr_review.md
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

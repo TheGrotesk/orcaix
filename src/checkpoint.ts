@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import { mkdirSync, readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
 import { resolve, join } from 'path';
 
-const CHECKPOINT_DIR = '.aiac-checkpoints';
+const CHECKPOINT_DIR = '.orcaix-checkpoints';
 
 export interface CheckpointData {
   workflowPath: string;

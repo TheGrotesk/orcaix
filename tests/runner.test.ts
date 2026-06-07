@@ -4,7 +4,7 @@ import { resolve, join } from 'path';
 import { loadWorkflow, resolveTemplates } from '../src/runner.js';
 
 // Use a temp directory for workflow fixture files
-const TMP = resolve('/tmp/aiac-runner-tests');
+const TMP = resolve('/tmp/orcaix-runner-tests');
 
 beforeEach(() => mkdirSync(TMP, { recursive: true }));
 afterEach(() => rmSync(TMP, { recursive: true, force: true }));

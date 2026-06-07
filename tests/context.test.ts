@@ -27,10 +27,10 @@ describe('createContext', () => {
   });
 
   it('includes process.env entries', () => {
-    process.env.AIAC_TEST_VAR = 'sentinel';
+    process.env.ORCAIX_TEST_VAR = 'sentinel';
     const ctx = createContext('test');
-    expect(ctx.env.AIAC_TEST_VAR).toBe('sentinel');
-    delete process.env.AIAC_TEST_VAR;
+    expect(ctx.env.ORCAIX_TEST_VAR).toBe('sentinel');
+    delete process.env.ORCAIX_TEST_VAR;
   });
 
   it('produces a timestamp string safe for filenames (no colons)', () => {
