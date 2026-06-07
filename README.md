@@ -6,7 +6,7 @@
 
 **Orcaix — run AI agent workflows defined in YAML**
 
-[![Version](https://img.shields.io/badge/version-0.1.5-6366f1?style=flat-square)](https://github.com/TheGrotesk/orcaix/releases/tag/v0.1.5)
+[![Version](https://img.shields.io/badge/version-0.1.6-6366f1?style=flat-square)](https://github.com/TheGrotesk/orcaix/releases/tag/v0.1.6)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License](https://img.shields.io/badge/license-GPL--v3-blue?style=flat-square)](LICENSE)
 [![Docs](https://img.shields.io/badge/docs-live-10b981?style=flat-square)](https://orcaix-docs.vercel.app)
